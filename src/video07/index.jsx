@@ -1,4 +1,4 @@
-// https://egghead.io/lessons/rxjs-reactive-programming-new-requests-from-refresh-clicks
+// https://egghead.io/lessons/rxjs-reactive-programming-clear-data-while-loading-with-rxjs-startwith
 
 import React from 'react'
 import { Observable } from 'rx'
@@ -11,7 +11,7 @@ const Suggestion= ({href, text, img}) =>
     <a href='#'>x</a>
   </li>
 
-export default class Video06 extends React.Component {
+export default class Video07 extends React.Component {
   render() {
     const suggestions= this.state.suggestions.map(
       (user, idx) =>
@@ -25,7 +25,7 @@ export default class Video06 extends React.Component {
 
     return (
       <div>
-        <h2>Video 6</h2>
+        <h2>Video 7</h2>
         <h3>Who to follow <a href='#' ref={e => this.refreshButton= e}>Refresh</a></h3>
         <ul>
           {suggestions}
@@ -48,16 +48,26 @@ export default class Video06 extends React.Component {
         return `${url}?since=${Math.floor(Math.random()*500)}`
       })
 
-    // ------a---b------c------->
-    // s------------------------>
-    //           merge
-    // s-----a---b------c------->
-
     let responseStream= requestOnRefreshStream
       .merge(startupReqeustStream)
       .flatMap(url => DOM.getJSON(url))
 
-    const createSuggestionStream= responseStream => responseStream.map(list => list[Math.floor(Math.random() * list.length)])
+    // --------u-------------u-->
+    //       startWith(N)
+    // N-------u---------------->
+    // ------------r----r------->
+    //       map
+    // ------------N----N------->
+    //       merge
+    // N-------u---N----N----u-->
+
+    const createSuggestionStream=
+      responseStream => responseStream.map(
+        list => list[Math.floor(Math.random() * list.length)]
+      )
+      //.startWith(null) -> render null value on initial load, not needed because of React
+      //.merge(refreshClickStream.map(e => null)) -> render null value after every refresh click, not needed because of React
+
     let suggestionStreams= [1,2,3].map(() => createSuggestionStream(responseStream))
 
     this.suggestionSubscriptions= suggestionStreams.map(
