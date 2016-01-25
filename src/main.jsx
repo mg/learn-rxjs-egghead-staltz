@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 const links= [
   { to: '/v1', label: 'Video 1' },
   { to: '/v2', label: 'Video 2' },
+  { to: '/v3', label: 'Video 3' },
 ]
 
 const Menu= ({locale, setLocale}) =>

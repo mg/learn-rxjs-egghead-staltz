@@ -1,7 +1,7 @@
 // https://egghead.io/lessons/rxjs-reactive-programming-what-is-rxjs?series=introduction-to-reactive-programming
 
 import React from 'react'
-import { Observable, Scheduler } from 'rx'
+import { Observable } from 'rx'
 
 export default class Video02 extends React.Component {
   render() {
