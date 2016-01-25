@@ -10,6 +10,7 @@ import Video4 from './video04'
 import Video5 from './video05'
 import Video6 from './video06'
 import Video7 from './video07'
+import Video8 from './video08'
 
 render((
   <Router>
@@ -22,6 +23,7 @@ render((
       <Route path='v5' component={Video5} />
       <Route path='v6' component={Video6} />
       <Route path='v7' component={Video7} />
+      <Route path='v8' component={Video8} />
     </Route>
   </Router>
 ), document.getElementById('app'))

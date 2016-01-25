@@ -39,7 +39,7 @@ export default class Video06 extends React.Component {
 
     let refreshClickStream= Rx.Observable.fromEvent(this.refreshButton, 'click')
 
-    let startupReqeustStream= Rx.Observable.just(url)
+    let startupRequestStream= Rx.Observable.just(url)
 
     let requestOnRefreshStream= refreshClickStream
       .map(e => {
@@ -54,7 +54,7 @@ export default class Video06 extends React.Component {
     // s-----a---b------c------->
 
     let responseStream= requestOnRefreshStream
-      .merge(startupReqeustStream)
+      .merge(startupRequestStream)
       .flatMap(url => DOM.getJSON(url))
 
     const createSuggestionStream= responseStream => responseStream.map(list => list[Math.floor(Math.random() * list.length)])

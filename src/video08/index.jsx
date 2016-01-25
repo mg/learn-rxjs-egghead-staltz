@@ -11,7 +11,7 @@ const Suggestion= ({href, text, img}) =>
     <a href='#'>x</a>
   </li>
 
-export default class Video07 extends React.Component {
+export default class Video08 extends React.Component {
   render() {
     const suggestions= this.state.suggestions.map(
       (user, idx) =>
@@ -25,7 +25,7 @@ export default class Video07 extends React.Component {
 
     return (
       <div>
-        <h2>Video 7</h2>
+        <h2>Video 8</h2>
         <h3>Who to follow <a href='#' ref={e => this.refreshButton= e}>Refresh</a></h3>
         <ul>
           {suggestions}
@@ -51,22 +51,12 @@ export default class Video07 extends React.Component {
     let responseStream= requestOnRefreshStream
       .merge(startupRequestStream)
       .flatMap(url => DOM.getJSON(url))
-
-    // --------u-------------u-->
-    //       startWith(N)
-    // N-------u---------------->
-    // ------------r----r------->
-    //       map
-    // ------------N----N------->
-    //       merge
-    // N-------u---N----N----u-->
+      .shareReplay(1) // every subscriptions will get same stream
 
     const createSuggestionStream=
       responseStream => responseStream.map(
         list => list[Math.floor(Math.random() * list.length)]
       )
-      //.startWith(null) -> render null value on initial load, not needed because of React
-      //.merge(refreshClickStream.map(e => null)) -> render null value after every refresh click, not needed because of React
 
     let suggestionStreams= [1,2,3].map(() => createSuggestionStream(responseStream))
 
