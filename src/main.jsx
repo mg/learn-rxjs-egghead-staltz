@@ -6,6 +6,7 @@ const links= [
   { to: '/v3', label: 'Video 3' },
   { to: '/v4', label: 'Video 4' },
   { to: '/v5', label: 'Video 5' },
+  { to: '/v6', label: 'Video 6' },
 ]
 
 const Menu= ({locale, setLocale}) =>
